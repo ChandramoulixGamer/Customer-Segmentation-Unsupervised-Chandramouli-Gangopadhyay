@@ -25,7 +25,7 @@ if uploaded_file:
     st.divider()
     
     
-    numeric_df = df.select_dtypes(include=['int64', 'float64']).fillna(df.select_dtypes(include=['int64', 'float64']).mean())
+numeric_df = df.select_dtypes(include=['int64', 'float64']).fillna(df.select_dtypes(include=['int64', 'float64']).mean())
 if numeric_df.empty:
     st.error("No valid numeric data found for clustering. Please upload a dataset with numeric columns.")
     st.stop()
