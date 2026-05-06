@@ -27,10 +27,17 @@ if uploaded_file:
     
     numeric_df = df.select_dtypes(include=['int64', 'float64']).fillna(df.select_dtypes(include=['int64', 'float64']).mean())
     if numeric_df.empty:
-        st.error("No valid numeric data found for clustering. Please upload a dataset with numeric columns.")
-    if numeric_df.nunique().sum() <= len(numeric_df.columns):
-        st.error("Dataset lacks enough variation for meaningful clustering.")
-        st.warning("Clustering works best with customer-like datasets containing multiple numeric behavioral features.")
+    st.error("No valid numeric data found for clustering. Please upload a dataset with numeric columns.")
+    st.stop()
+
+if len(numeric_df.columns) < 2 or len(numeric_df) < 3:
+    st.error("Dataset needs at least 2 numeric columns and 3 rows for clustering.")
+    st.stop()
+
+if numeric_df.nunique().sum() <= len(numeric_df.columns):
+    st.error("Dataset lacks enough variation for meaningful clustering.")
+    st.stop()
+    
     st.write("Missing Values Per Column:")
     st.write(df.isnull().sum())
     st.divider()
